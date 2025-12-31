@@ -221,3 +221,112 @@ uvicorn src.api:app --reload
 cd frontend
 npm run dev
 ```
+
+
+## How to Test (Quick Reminder)
+
+In Swagger UI (`/docs`) or from your frontend, send text to your prediction field (e.g., `job_description`).
+
+---
+
+# ❌ FAKE JOB POSTING EXAMPLES (3)
+
+### Fake Job – Example 1
+
+```
+We are urgently hiring candidates to work from home and earn up to ₹50,000 per week. No experience required. Registration fee is mandatory to activate your job ID. Immediate joining guaranteed. Limited slots available, apply now.
+```
+
+**Why fake indicators exist**
+
+* Unrealistic salary
+* Urgency pressure
+* Registration fee
+* No company details
+
+---
+
+### Fake Job – Example 2
+
+```
+Congratulations! You have been shortlisted for an online data entry position. Earn money instantly by completing simple tasks. Payment will be released daily. Submit your bank details and ID proof to get started today.
+```
+
+**Why fake indicators exist**
+
+* “Congratulations” without interview
+* Requests sensitive information
+* Vague job responsibilities
+
+---
+
+### Fake Job – Example 3
+
+```
+This is a verified international opportunity. Earn dollars from home by sharing links on social media. No skills required. Investment of ₹2,000 is required to activate your account. High profit guaranteed.
+```
+
+**Why fake indicators exist**
+
+* Investment required
+* Guaranteed profits
+* No employer identity
+
+---
+
+# ✅ REAL JOB POSTING EXAMPLES (3)
+
+### Real Job – Example 1
+
+```
+We are hiring a Software Engineer with 2–4 years of experience in Python and REST APIs. Responsibilities include developing backend services, writing unit tests, and collaborating with frontend teams. Candidates should have experience with FastAPI or Django. Location: Bengaluru (Hybrid).
+```
+
+**Why real indicators exist**
+
+* Clear role
+* Skills required
+* Location
+* No monetary requests
+
+---
+
+### Real Job – Example 2
+
+```
+ABC Technologies Pvt Ltd is looking for a Data Analyst to join our analytics team. The role involves data cleaning, dashboard creation, and report generation using Python and SQL. Bachelor’s degree required. Full-time position with benefits.
+```
+
+**Why real indicators exist**
+
+* Company name
+* Defined responsibilities
+* Educational requirements
+* Professional tone
+
+---
+
+### Real Job – Example 3
+
+```
+We are seeking a Marketing Executive responsible for campaign planning, market research, and performance analysis. Prior experience in digital marketing tools is preferred. Salary as per industry standards. Office location: Mumbai.
+```
+
+**Why real indicators exist**
+
+* Structured description
+* Realistic salary phrasing
+* No urgency or fees
+
+---
+
+## Expected Model Behavior (High-Level)
+
+| Input Type | Expected Prediction |
+| ---------- | ------------------- |
+| Fake job   | Fake / Fraudulent   |
+| Real job   | Real / Legitimate   |
+
+(Exact labels depend on your model output format.)
+
+---
