@@ -203,7 +203,6 @@ function App() {
                   "Login"
                 )}
               </button>
-              <p className="login-hint">Default credentials: admin / admin123</p>
             </div>
           </div>
         ) : (

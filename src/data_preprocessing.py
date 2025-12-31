@@ -1,15 +1,3 @@
-""" 
-Milestone 1: Data Preprocessing & Exploration 
-Fake Job Post Detection System 
-This script performs: 
-1. Data loading and cleaning 
-2. Exploratory Data Analysis (EDA) 
-3. Text preprocessing 
-4. Feature extraction using TF-IDF 
-5. Data preparation for model training 
-Author: Fake Job Detection Team 
-Date: 2025 
-""" 
 import pandas as pd 
 import numpy as np 
 import re 
