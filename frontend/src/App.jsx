@@ -11,6 +11,7 @@ function App() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
+  const [showGuide, setShowGuide] = useState(false);
 
   function validateLogin() {
     const errors = {};
@@ -41,7 +42,8 @@ function App() {
 
     setLoginLoading(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/login", {
+      const apiUrl = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+      const res = await fetch(`${apiUrl}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: username.trim(), password: password.trim() })
@@ -82,7 +84,8 @@ function App() {
     setResult(null);
     
     try {
-      const res = await fetch("http://127.0.0.1:8000/predict", {
+      const apiUrl = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+      const res = await fetch(`${apiUrl}/predict`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -206,10 +209,60 @@ function App() {
         ) : (
           <div className="main-section">
             <div className="header-actions">
+              <button 
+                className="how-to-toggle" 
+                onClick={() => setShowGuide(!showGuide)}
+                aria-expanded={showGuide}
+              >
+                <span>{showGuide ? '📖' : '❓'}</span>
+                {showGuide ? 'Hide Guide' : 'How to Use'}
+              </button>
               <button className="btn btn-secondary" onClick={logout}>
                 Logout
               </button>
             </div>
+
+            {showGuide && (
+              <div className="how-to-guide">
+                <h3>How to Use This App</h3>
+                <ol className="how-to-steps">
+                  <li>
+                    <strong>Login:</strong> Use your credentials to access the analyzer. 
+                    Default credentials are provided for testing.
+                  </li>
+                  <li>
+                    <strong>Paste Job Description:</strong> Copy and paste the complete job 
+                    posting description into the text area. The more details you include, 
+                    the more accurate the analysis will be.
+                  </li>
+                  <li>
+                    <strong>Analyze:</strong> Click the "Analyze Job Posting" button to 
+                    process the description through our AI-powered fraud detection system.
+                  </li>
+                  <li>
+                    <strong>Review Results:</strong> The system will display:
+                    <ul style={{ marginTop: '8px', paddingLeft: '20px', listStyle: 'disc' }}>
+                      <li>Prediction (Legitimate or Fraudulent)</li>
+                      <li>Fraud probability percentage</li>
+                      <li>Confidence score</li>
+                      <li>Detailed analysis message</li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>Make Informed Decisions:</strong> Use the analysis results along 
+                    with your own judgment to evaluate job opportunities safely.
+                  </li>
+                </ol>
+                <div className="how-to-tips">
+                  <strong>💡 Tips for Best Results:</strong>
+                  <p>
+                    Include the full job description with all details like company information, 
+                    job requirements, salary details, and contact information. The AI analyzes 
+                    patterns, language, and red flags that are common in fraudulent postings.
+                  </p>
+                </div>
+              </div>
+            )}
 
             <div className="input-section">
               <label htmlFor="job-description">Job Description</label>

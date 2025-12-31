@@ -80,20 +80,20 @@ class FakeJobDataProcessor:
         """ 
         Load the dataset from CSV file or create sample data for demonstration. 
         """ 
-        print("\n" + "="*60) 
-        print("STEP 1: LOADING DATA") 
-        print("="*60) 
+        print("\n" + "="*60, flush=True) 
+        print("STEP 1: LOADING DATA", flush=True) 
+        print("="*60, flush=True) 
          
         if self.data_path and os.path.exists(self.data_path): 
             self.df = pd.read_csv(self.data_path) 
-            print(f"✓ Loaded dataset from {self.data_path}") 
+            print(f"✓ Loaded dataset from {self.data_path}", flush=True) 
         else: 
             # Create sample dataset for demonstration 
-            print("✓ Creating sample dataset for demonstration...") 
+            print("✓ Creating sample dataset for demonstration...", flush=True) 
             self.df = self._create_sample_data() 
          
-        print(f"✓ Dataset shape: {self.df.shape}") 
-        print(f"✓ Columns: {list(self.df.columns)}") 
+        print(f"✓ Dataset shape: {self.df.shape}", flush=True) 
+        print(f"✓ Columns: {list(self.df.columns)}", flush=True) 
          
         return self.df 
      
@@ -270,8 +270,7 @@ class FakeJobDataProcessor:
                 job_copy = job.copy() 
                 # Add slight variations 
                 if i % 3 == 0: 
-                    job_copy['location'] = np.random.choice(['Boston, MA', 'Denver, CO', 'Miami, FL', 
-'Portland, OR']) 
+                    job_copy['location'] = np.random.choice(['Boston, MA', 'Denver, CO', 'Miami, FL', 'Portland, OR']) 
                 all_jobs.append(job_copy) 
          
         # Add more fake jobs (multiply by 3 to get ~15 fake jobs for realistic imbalance) 
@@ -304,9 +303,9 @@ class FakeJobDataProcessor:
         """ 
         Perform comprehensive Exploratory Data Analysis. 
         """ 
-        print("\n" + "="*60) 
-        print("STEP 2: EXPLORATORY DATA ANALYSIS") 
-        print("="*60) 
+        print("\n" + "="*60, flush=True) 
+        print("STEP 2: EXPLORATORY DATA ANALYSIS", flush=True) 
+        print("="*60, flush=True) 
          
         # Basic info 
         print("\n--- Dataset Information ---") 
@@ -473,9 +472,9 @@ color=colors)
         """ 
         Apply text preprocessing to all text columns. 
         """ 
-        print("\n" + "="*60) 
-        print("STEP 3: TEXT PREPROCESSING") 
-        print("="*60) 
+        print("\n" + "="*60, flush=True) 
+        print("STEP 3: TEXT PREPROCESSING", flush=True) 
+        print("="*60, flush=True) 
          
         self.df_processed = self.df.copy() 
          
@@ -524,9 +523,9 @@ color=colors)
         Args: 
             max_features: Maximum number of TF-IDF features 
         """ 
-        print("\n" + "="*60) 
-        print("STEP 4: FEATURE EXTRACTION (TF-IDF)") 
-        print("="*60) 
+        print("\n" + "="*60, flush=True) 
+        print("STEP 4: FEATURE EXTRACTION (TF-IDF)", flush=True) 
+        print("="*60, flush=True) 
          
         # Initialize TF-IDF Vectorizer 
         self.tfidf_vectorizer = TfidfVectorizer( 
@@ -562,9 +561,9 @@ color=colors)
             test_size: Proportion of data for testing 
             random_state: Random seed for reproducibility 
         """ 
-        print("\n" + "="*60) 
-        print("STEP 5: TRAIN/TEST SPLIT") 
-        print("="*60) 
+        print("\n" + "="*60, flush=True) 
+        print("STEP 5: TRAIN/TEST SPLIT", flush=True) 
+        print("="*60, flush=True) 
          
         X = self.feature_matrix 
         y = self.df_processed['fraudulent'].values 
@@ -596,9 +595,9 @@ color=colors)
         """ 
         Save processed data and artifacts for Milestone 2. 
         """ 
-        print("\n" + "="*60) 
-        print("STEP 6: SAVING PROCESSED DATA") 
-        print("="*60) 
+        print("\n" + "="*60, flush=True) 
+        print("STEP 6: SAVING PROCESSED DATA", flush=True) 
+        print("="*60, flush=True) 
          
         # Create output directory 
         os.makedirs(output_dir, exist_ok=True) 
@@ -624,83 +623,15 @@ color=colors)
          
         return output_dir 
      
-    def generate_report(self): 
-        """ 
-        Generate a summary report of the preprocessing pipeline. 
-        """ 
-        print("\n" + "="*60) 
-        print("MILESTONE 1 SUMMARY REPORT") 
-        print("="*60) 
-         
-        report = f""" 
-╔═══════════════════════════════════════════════════════════
-═══╗ 
-║        FAKE JOB DETECTION - MILESTONE 1 COMPLETE             ║ 
-╚═══════════════════════════════════════════════════════════
-═══╝ 
- 
-�
-�
- DATASET OVERVIEW 
-   • Total samples: {len(self.df_processed)} 
-   • Real job posts: {sum(self.df_processed['fraudulent']==0)} 
-   • Fake job posts: {sum(self.df_processed['fraudulent']==1)} 
-   • Class imbalance ratio: 
-{sum(self.df_processed['fraudulent']==0)/sum(self.df_processed['fraudulent']==1):.1f}:1 
- 
-�
-�
- PREPROCESSING APPLIED 
-   • HTML tag removal 
-   • URL and email removal 
-   • Lowercase conversion 
-   • Special character removal 
-   • Stop word removal 
-   • Lemmatization 
- 
-�
-�
- FEATURE EXTRACTION 
-   • Method: TF-IDF Vectorization 
-   • Max features: {self.feature_matrix.shape[1]} 
-   • N-gram range: (1, 2) 
-   • Sparse matrix size: {self.feature_matrix.shape} 
- 
-�
-�
- DATA SPLITS 
-   • Training samples: {self.X_train.shape[0]} 
-   • Testing samples: {self.X_test.shape[0]} 
-   • Test ratio: 20% 
- 
-�
-�
- OUTPUT FILES 
-   • processed_jobs.csv - Cleaned dataset 
-   • X_train.npy, X_test.npy - Feature matrices 
-   • y_train.npy, y_test.npy - Labels 
-   • tfidf_vectorizer.pkl - Fitted vectorizer 
-   • eda_visualizations.png - EDA plots 
- 
-✅
- READY FOR MILESTONE 2: MODEL TRAINING 
-""" 
-        print(report) 
-         
-        # Save report to file with UTF-8 encoding 
-        with open('milestone1_report.txt', 'w', encoding='utf-8') as f: 
-            f.write(report) 
-        print("Report saved to 'milestone1_report.txt'") 
- 
  
 def main(): 
     """ 
     Main function to run the complete Milestone 1 pipeline. 
     """ 
-    print("\n" + "="*60) 
-    print("FAKE JOB POST DETECTION SYSTEM") 
-    print("Milestone 1: Data Preprocessing & Exploration") 
-    print("="*60) 
+    print("\n" + "="*60, flush=True) 
+    print("FAKE JOB POST DETECTION SYSTEM", flush=True) 
+    print("Milestone 1: Data Preprocessing & Exploration", flush=True) 
+    print("="*60, flush=True) 
      
     # Initialize processor 
     # You can pass a path to your dataset here: 
@@ -714,11 +645,10 @@ def main():
     processor.extract_features(max_features=3000) 
     processor.prepare_train_test_split(test_size=0.2) 
     processor.save_processed_data() 
-    processor.generate_report() 
      
-    print("\n" + "="*60) 
-    print("MILESTONE 1 COMPLETED SUCCESSFULLY!") 
-    print("="*60) 
+    print("\n" + "="*60, flush=True) 
+    print("MILESTONE 1 COMPLETED SUCCESSFULLY!", flush=True) 
+    print("="*60, flush=True) 
      
     return processor 
  
