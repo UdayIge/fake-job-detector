@@ -89,6 +89,10 @@ class LoginInput(BaseModel):
     username: str
     password: str
 
+@app.post("/")
+def root():
+    return {"message": "Welcome to the Fake Job Detection API"}
+
 @app.post("/login")
 def login(data: LoginInput):
     if data.username == FAKE_USER["username"] and data.password == FAKE_USER["password"]:
