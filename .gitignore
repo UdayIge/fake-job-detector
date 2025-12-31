@@ -29,9 +29,6 @@ env/
 # Machine Learning / Data
 # ==============================
 # Large model files (commit only if explicitly required)
-*.h5
-*.joblib
-*.pkl
 
 # Numpy arrays
 *.npy
