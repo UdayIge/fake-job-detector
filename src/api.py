@@ -19,6 +19,8 @@ import pickle
 import os
 import tensorflow as tf
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+from tensorflow.keras.models import load_model
+
 MAX_LEN = 200
 
 # Load model and tokenizer with error handling
@@ -26,7 +28,8 @@ try:
     model_path = "models/bilstm_model_v1.h5"
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"Model file not found: {model_path}")
-    model = tf.keras.models.load_model(model_path)
+    model = load_model(model_path, compile=False)
+    print("MODEL LOADED SUCCESSFULLY")
 except Exception as e:
     model = None
     print(f"Error loading model: {e}")
